@@ -1,1 +1,26 @@
-/* You can add global styles to this file, and also import other style files */
+/*Importación de Montserrat_Alterbates-Medium*/
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@500&display=swap');
+
+/*Las importaciones y configuraciones de tailwind y daisyui en sus versiones actuales sin el tailwind.config.ts (tailwind 4 y daisyui 5)*/
+@import "tailwindcss";
+@plugin "daisyui"{
+  themes: night --default;
+}
+
+/*El intento de usar la fuente desde el archivo local*/
+@font-face {
+  font-family: "Montserrat";
+  src: url("/assets/fonts/Montserrat-Alternates/MontserratAlternates-Medium") format("truetype");
+}
+
+/*La configuración de font-montserrat para usar en el html haciendo referencia a la importación web. Este es el que funciona actualmente*/
+@theme {
+  --font-montserrat: "Montserrat Alternates", sans-serif;
+
+/*Estoy añadiendo esto al comentario tras ver la lección siguiente, donde también he tenido un problema parecido pero ya está solucionado porque, nuevamente, ahora las configuraciones son todas aquí en el css y no en el config.ts que ya no existe*/
+  --animate-fadeIn: fadeIn 0.3s ease-in-out;
+  @keyframes fadeIn {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+  }
+}
