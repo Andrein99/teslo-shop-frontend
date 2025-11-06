@@ -37,8 +37,8 @@ export class AuthService {
 
   user = computed<User|null>(() => this._user());
   token = computed(this._token);
+  isAdmin = computed(() => this._user()?.roles.includes('admin') ?? false);
 
-  // TODO:
   register(email: string, password: string, fullName: string): Observable<boolean> {
     return this.httpClient.post<AuthResponse>(`${baseUrl}/auth/register`, {
       email: email,
