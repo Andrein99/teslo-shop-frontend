@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, input, OnInit, signal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -24,6 +24,14 @@ export class ProductDetails implements OnInit {
   productsService = inject(ProductsService);
   wasSaved = signal(false);
 
+  imageFileList: FileList | undefined = undefined;
+  tempImages = signal<string[]>([]);
+  imagesToCarousel = computed(() => {
+    const currentProductImages = [...this.product().images, ...this.tempImages()];
+
+    return currentProductImages;
+  })
+
   productForm = this.fb.group({
     title: ['', Validators.required],
     description: ['', Validators.required],
@@ -39,16 +47,28 @@ export class ProductDetails implements OnInit {
   sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
 
   ngOnInit(): void {
+    /**
+     * Inicializar el formulario con los datos del producto
+     * @returns void
+     */
     this.setFormValue(this.product());
   }
 
   setFormValue(formLike: Partial<Product>) {
+    /**
+     * Función para inicializar el formulario con los datos del producto
+     * @param formLike Datos del producto
+     */
     // this.productForm.patchValue(formLike as any);
     this.productForm.reset(this.product() as any);
     this.productForm.patchValue({ tags: formLike.tags?.join(',') });
   }
 
   onSizeClicked(size: string) {
+    /**
+     * Función para agregar o quitar una talla del formulario
+     * @param size Talla a agregar o quitar
+     */
     const currentSizes = this.productForm.value.sizes ?? [];
 
     if (currentSizes.includes(size)) {
@@ -61,6 +81,9 @@ export class ProductDetails implements OnInit {
   }
 
   async onSubmit() {
+    /**
+     * Función para guardar el producto
+     */
     const isValid = this.productForm.valid;
     this.productForm.markAllAsTouched();
 
@@ -76,7 +99,7 @@ export class ProductDetails implements OnInit {
     if(this.product().id === 'new') {
       // Crear producto
       const product = await firstValueFrom(
-        this.productsService.createProduct(productLike)
+        this.productsService.createProduct(productLike, this.imageFileList)
       );
 
       swal({
@@ -87,7 +110,7 @@ export class ProductDetails implements OnInit {
       this.router.navigate(['/admin/products', product.id]);
     } else {
       await firstValueFrom(
-        this.productsService.updateProduct(this.product().id, productLike)
+        this.productsService.updateProduct(this.product().id, productLike, this.imageFileList)
       );
 
       swal({
@@ -103,5 +126,19 @@ export class ProductDetails implements OnInit {
     }, 3000);
   }
 
+  // Images
+  onFilesChanged(event: Event) {
+    /**
+     * Función para manejar el cambio de archivos de imagen
+     * @param event Evento de cambio de archivos
+     */
+    const fileList = (event.target as HTMLInputElement).files;
+    this.imageFileList = fileList ?? undefined;
+
+    const imageUrls = Array.from(fileList ?? []).map((file) => URL.createObjectURL(file));
+
+    this.tempImages.set(imageUrls);
+
+  }
 
 }

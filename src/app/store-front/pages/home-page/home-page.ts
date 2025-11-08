@@ -26,7 +26,7 @@ export class HomePage {
   //   }
   // )
 
-  productsResource = rxResource({
+  productsResource = rxResource({ // Define un recurso reactivo para obtener productos paginados
     params: () => ({ page: this.paginationService.currentPage() - 1 }),
     stream: ({ params }) => {
       return this.productsService.getProducts({

@@ -16,9 +16,9 @@ export class ProductPage {
   activatedRoute = inject(ActivatedRoute);
   router = inject(Router);
 
-  productIdSlug = this.activatedRoute.snapshot.params['idSlug'];
+  productIdSlug = this.activatedRoute.snapshot.params['idSlug']; // Obtener el idSlug desde los parametros de la ruta
 
-  productResource = rxResource({
+  productResource = rxResource({ // Define un recurso reactivo para obtener el producto por idSlug
     params: () => ({ idSlug: this.productIdSlug }),
     stream: ({ params }) => {
       return this.productsService.getProductByIdSlug(params.idSlug)

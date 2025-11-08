@@ -21,6 +21,13 @@ export class FormUtils {
   static slugPattern = '^[a-z0-9_]+(?:-[a-z0-9_]+)*$';
 
   static getTextError(errors: ValidationErrors) {
+    /**
+     * Funcion que retorna el mensaje de error segun el tipo de error
+     * recibido.
+     *
+     * @param errors - ValidationErrors
+     * @returns string | null
+     */
     for (const key of Object.keys(errors)) {
       switch (key) {
         case 'required':
@@ -57,12 +64,27 @@ export class FormUtils {
   }
 
   static isValidField(form: FormGroup, fieldName: string): boolean | null {
+    /**
+     * Funcion que retorna si un campo del formulario es valido
+     * o no.
+     *
+     * @param form - FormGroup
+     * @param fieldName - string
+     * @returns boolean | null
+     */
     return (
       !!form.controls[fieldName].errors && form.controls[fieldName].touched
     );
   }
 
   static getFieldError(form: FormGroup, fieldName: string): string | null {
+    /**
+     * Funcion que retorna el mensaje de error de un campo
+     * del formulario.
+     * @param form - FormGroup
+     * @param fieldName - string
+     * @return string | null
+     */
     if (!form.controls[fieldName]) return null;
 
     const errors = form.controls[fieldName].errors ?? {};
@@ -71,6 +93,13 @@ export class FormUtils {
   }
 
   static isValidFieldInArray(formArray: FormArray, index: number) {
+    /**
+     * Funcion que retorna si un campo dentro de un FormArray
+     * es valido o no.
+     * @param formArray - FormArray
+     * @param index - number
+     * @returns boolean | null
+     */
     return (
       formArray.controls[index].errors && formArray.controls[index].touched
     );
@@ -80,6 +109,13 @@ export class FormUtils {
     formArray: FormArray,
     index: number
   ): string | null {
+    /**
+     * Funcion que retorna el mensaje de error de un campo
+     * dentro de un FormArray.
+     * @param formArray - FormArray
+     * @param index - number
+     * @returns string | null
+     */
     if (formArray.controls.length === 0) return null;
 
     const errors = formArray.controls[index].errors ?? {};
@@ -88,6 +124,12 @@ export class FormUtils {
   }
 
   static isFieldOneEqualFieldTwo(field1: string, field2: string) {
+    /**
+     * Funcion que valida si dos campos de un formulario son iguales.
+     * @param field1 - string
+     * @param field2 - string
+     * @returns (formGroup: AbstractControl) => ValidationErrors | null
+     */
     return (formGroup: AbstractControl) => {
       const field1Value = formGroup.get(field1)?.value;
       const field2Value = formGroup.get(field2)?.value;
@@ -99,6 +141,12 @@ export class FormUtils {
   static async checkingServerResponse(
     control: AbstractControl
   ): Promise<ValidationErrors | null> {
+    /**
+     * Funcion que simula una validacion asincrona contra
+     * un servidor.
+     * @param control - AbstractControl
+     * @returns Promise<ValidationErrors | null>
+     */
     console.log('Validando contra servidor');
 
     await sleep(); // 2 segundos y medio
@@ -114,9 +162,9 @@ export class FormUtils {
     return null;
   }
 
-  static notStrider(control: AbstractControl): ValidationErrors | null {
-    const value = control.value;
+  // static notStrider(control: AbstractControl): ValidationErrors | null {
+  //   const value = control.value;
 
-    return value === 'strider' ? { noStrider: true } : null;
-  }
+  //   return value === 'strider' ? { noStrider: true } : null;
+  // }
 }

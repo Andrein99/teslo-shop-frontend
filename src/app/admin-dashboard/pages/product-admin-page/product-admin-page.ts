@@ -21,7 +21,7 @@ export class ProductAdminPage {
     )
   );
 
-  productResource = rxResource({
+  productResource = rxResource({ // Recurso reactivo para obtener el producto por ID
     params: () => ({ id: this.productId() }),
     stream: ({ params }) => {
       return this.productsService.getProductById(params.id);

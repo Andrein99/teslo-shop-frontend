@@ -7,6 +7,12 @@ export function authInterceptor(
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
 ): Observable<HttpEvent<unknown>> {
+  /**
+   * Función que intercepta las peticiones HTTP y añade el token de autenticación en el encabezado Authorization.
+   * @param req La solicitud HTTP entrante.
+   * @param next La función manejadora de la solicitud HTTP.
+   * @returns Un Observable que emite los eventos HTTP.
+   */
   const token = inject(AuthService).token();
 
   const newReq = req.clone({

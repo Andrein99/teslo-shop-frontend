@@ -22,6 +22,13 @@ export class LoginPage {
   });
 
   onSubmit() {
+    /**
+     * Función que maneja el envío del formulario de inicio de sesión.
+     * Valida el formulario y llama al servicio de autenticación.
+     * Si la autenticación es exitosa, redirige al usuario a la página principal.
+     * Si hay un error, muestra un mensaje de error temporalmente.
+     * @return void
+     */
     if (this.loginForm.invalid) {
       this.hasError.set(true);
       setTimeout(() => {

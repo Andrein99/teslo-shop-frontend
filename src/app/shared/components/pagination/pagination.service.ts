@@ -8,6 +8,12 @@ export class PaginationService {
   private activatedRoute = inject(ActivatedRoute);
 
   currentPage = toSignal(
+    /**
+     * Signal que obtiene el numero de pagina actual desde los query params
+     * de la ruta activa.
+     *
+     * @returns number
+     */
     this.activatedRoute.queryParamMap.pipe(
       map((params) => (params.get('page') ? +params.get('page')! : 1)),
       map((page) => (isNaN(page) ? 1 : page))

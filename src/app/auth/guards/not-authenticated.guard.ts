@@ -7,6 +7,10 @@ export const NotAuthenticatedGuard: CanMatchFn = async (
   route: Route,
   segments: UrlSegment[]
 ) => {
+  /**
+   * Funcion que verifica si el usuario no esta autenticado.
+   * Si el usuario esta autenticado, redirige a la pagina principal.
+   */
   const authService = inject(AuthService);
   const router = inject(Router);
 

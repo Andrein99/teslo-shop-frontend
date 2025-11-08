@@ -17,7 +17,7 @@ export class ProductsAdminPage {
 
     productsPerPage = signal(10);
 
-    productsResource = rxResource({
+    productsResource = rxResource({ // Recurso reactivo para obtener la lista de productos con paginación
       params: () => ({
         page: this.paginationService.currentPage() - 1,
         limit: this.productsPerPage(),

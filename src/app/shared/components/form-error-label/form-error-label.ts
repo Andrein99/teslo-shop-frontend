@@ -11,6 +11,12 @@ export class FormErrorLabel {
   control = input.required<AbstractControl>();
 
   get errorMessage() {
+    /**
+     * Getter que retorna el mensaje de error del control si este
+     * ha sido tocado y tiene errores.
+     *
+     * @returns string | null
+     */
     const errors: ValidationErrors = this.control().errors || {};
 
     return this.control().touched && Object.keys(errors).length > 0

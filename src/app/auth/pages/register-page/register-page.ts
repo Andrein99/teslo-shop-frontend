@@ -24,6 +24,13 @@ export class RegisterPage {
   })
 
   onSubmit() {
+    /**
+     * Función que maneja el envío del formulario de registro.
+     * Valida el formulario y llama al servicio de autenticación para registrar al usuario.
+     * Si el registro es exitoso, muestra un mensaje de éxito y redirige al usuario a la página principal.
+     * Si hay un error, muestra un mensaje de error con el detalle.
+     * @return void
+     */
     if (this.registerForm.invalid) {
       this.hasError.set(true);
       setTimeout(() => {

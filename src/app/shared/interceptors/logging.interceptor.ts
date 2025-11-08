@@ -5,6 +5,13 @@ export function loggingInterceptor(
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
 ): Observable<HttpEvent<unknown>> {
+  /**
+   * Interceptor que loggea en consola la url de la peticion
+   * y el status de la respuesta.
+   * @param req - HttpRequest<unknown>
+   * @param next - HttpHandlerFn
+   * @returns Observable<HttpEvent<unknown>>
+   */
   return next(req).pipe(
     tap((event) => {
       if (event.type === HttpEventType.Response) {

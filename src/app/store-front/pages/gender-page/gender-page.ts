@@ -30,7 +30,7 @@ export class GenderPage {
     )
   );
 
-  productsResource = rxResource({
+  productsResource = rxResource({ // Define un recurso reactivo para obtener productos paginados por genero
     params: () => ({ gender: this.gender(), page: this.paginationService.currentPage() - 1 }),
     stream: ({ params }) => {
       return this.productsService.getProducts({
